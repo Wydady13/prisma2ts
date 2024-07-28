@@ -1,17 +1,16 @@
 "use client";
 
 import { convertPrismaSchemaToTs } from "@/converter";
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { gml } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+
+import CodeEditor from "@/components/preview-code";
 import Link from "next/link";
 import { useState } from "react";
 
 export default function Component() {
-  const defaultText = `paste your prisma schema here`;
-  const [prismaSchema, setPrismaSchema] = useState(defaultText);
+  const [prismaSchema, setPrismaSchema] = useState("");
   const [typescriptInterfaces, setTypescriptInterfaces] = useState("");
   const [showCopiedState, setShowCopiedState] = useState(false);
 
@@ -32,6 +31,7 @@ export default function Component() {
       console.error(error);
     }
   };
+
   return (
     <div className="flex min-h-screen flex-col p-5">
       <div className="w-full space-y-4">
@@ -46,7 +46,7 @@ export default function Component() {
           <div className="space-y-5 col-span-2 md:col-span-1">
             <Textarea
               id="input-text"
-              placeholder="Enter text here"
+              placeholder={"paste your prisma schema here"}
               value={prismaSchema}
               onChange={(e) => handleSchemaChange(e.target.value)}
               className="h-48 text-[#f3f4f6] border-[#292929] "
@@ -71,20 +71,10 @@ export default function Component() {
             </div>
           </div>
           <div className="space-y-1 col-span-2 w-full">
-            <div contentEditable>
-              <SyntaxHighlighter
-                wrapLines={true}
-                wrapLongLines={true}
-                customStyle={{
-                  width: "100%",
-                  background: "transparent",
-                }}
-                language="typescript"
-                style={gml}
-              >
-                {typescriptInterfaces ? typescriptInterfaces : defaultText}
-              </SyntaxHighlighter>
-            </div>
+            <CodeEditor
+              value={typescriptInterfaces}
+              defaultValue={typescriptInterfaces}
+            />
           </div>
         </div>
       </div>
