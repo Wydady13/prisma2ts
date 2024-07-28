@@ -9,7 +9,7 @@ const baseTypeMapping: BaseTypeMapping = {
   Boolean: "boolean",
   DateTime: "Date",
   Json: "any",
-  Bytes: "Buffer",
+  Bytes: "Uint8Array",
   BigInt: "bigint",
 };
 
